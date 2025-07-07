@@ -128,7 +128,7 @@ pipeline {
       steps {
         script {
             
-            sh "sudo su - root"
+            // sh "sudo su - root"
 
             // Build the Docker image
             sh "cd spring-boot-app && docker build -t ${repositoryName}:${dockerImageTag} ."
