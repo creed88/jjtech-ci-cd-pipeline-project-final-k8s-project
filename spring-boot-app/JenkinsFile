@@ -113,12 +113,9 @@ pipeline {
 
     stage('Install docker') {
         steps {
-           sh "yum install docker -y"
-           sh "systemctl start docker"
-           sh "ystemctl enable docker"
-           sh "usermod -aG docker jenkins"
-            }
+            sh 'docker --version' // Verify Docker is installed
         }
+    }
     
     stage('Build and Push Docker Image') {
       environment {
