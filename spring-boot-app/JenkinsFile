@@ -24,9 +24,10 @@ pipeline {
      steps {
        script{
          dir ('terraform/eks-cluster-ec2') {
+           sh 'terraform init -upgrade'
            sh 'terraform init -reconfigure'
            sh 'terraform fmt'
-          //  sh 'terraform validate'
+           sh 'terraform validate'
            sh 'terraform plan -out=tfplan'
            stash includes: 'tfplan', name: 'terraform-plan'
          }
