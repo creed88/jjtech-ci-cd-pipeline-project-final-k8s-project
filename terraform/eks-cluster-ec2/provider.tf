@@ -3,12 +3,12 @@
 terraform {
   backend "s3" {
     # Replace this with your bucket name!
-    bucket         = "final-k8s-prj-creed88"
+    bucket         = "charles-project-55555"
     key            = "jjtech/terraform.tfstate"
     region         = "us-east-1"
 
     # Replace this with your DynamoDB table name!
-    dynamodb_table = "final-k8s-table"
+    # dynamodb_table = "final-k8s-table"
   }
   
   required_providers {
@@ -23,7 +23,7 @@ provider "aws" {
   region = var.region
   default_tags {
     tags = {
-      Name    = "k8s_immersion_batch"
+      Name    = "charles-project"
       project = "eks_demo"
     }
   }
