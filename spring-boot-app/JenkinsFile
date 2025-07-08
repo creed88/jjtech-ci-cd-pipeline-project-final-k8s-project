@@ -183,9 +183,9 @@ pipeline {
               cd jjtech-k8s-gitops
 
               # Replace the image tag placeholder
-              sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yaml
+              sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
 
-              git add deployment.yaml
+              git add deployment.yml
               git commit -m "Update image tag to ${BUILD_NUMBER}"
               git push
         '''
