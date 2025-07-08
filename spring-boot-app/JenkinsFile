@@ -151,23 +151,49 @@ pipeline {
     }
         
 
-    stage("Deploy to EKS"){
-        environment {
-        region = 'us-east-1'
-        clusterName = 'jjtech-demo-cluster'
-        awsAccountId = '529088284113'
-      }       
-        steps {  
+    // stage("Deploy to EKS"){
+    //     environment {
+    //     region = 'us-east-1'
+    //     clusterName = 'jjtech-demo-cluster'
+    //     awsAccountId = '529088284113'
+    //   }       
+    //     steps {  
+    //       script {
+    //         sh "sed -i 's/replaceImageTag/${BUILD_NUMBER}/g' k8s-manifests/deployment.yaml"
+    //         sh "sed -i 's/replaceaccountid/${awsAccountId}/g' k8s-manifests/deployment.yaml"
+    //         dir('k8s-manifests'){      
+    //         sh "aws eks update-kubeconfig --name ${clusterName} --region ${region}"
+    //         sh "kubectl apply -f ."
+    //   }
+    //     }
+    //   }
+    // }
+
+    stage('Update GitOps Repo') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'gitops-credentials', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
           script {
-            sh "sed -i 's/replaceImageTag/${BUILD_NUMBER}/g' k8s-manifests/deployment.yaml"
-            sh "sed -i 's/replaceaccountid/${awsAccountId}/g' k8s-manifests/deployment.yaml"
-            dir('k8s-manifests'){      
-            sh "aws eks update-kubeconfig --name ${clusterName} --region ${region}"
-            sh "kubectl apply -f ."
-      }
-        }
+            sh '''
+              git config --global user.name "jenkins"
+              git config --global user.email "jenkins@ci.local"
+
+              # Clone your real GitHub repo
+              git clone https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/creed88/jjtech-k8s-gitops.git
+
+              cd jjtech-k8s-gitops
+
+              # Replace the image tag placeholder
+              sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yaml
+
+              git add deployment.yaml
+              git commit -m "Update image tag to ${BUILD_NUMBER}"
+              git push
+        '''
       }
     }
+  }
+}
+
   
     // stage('approve destroy for terraform') {
     //         steps {
