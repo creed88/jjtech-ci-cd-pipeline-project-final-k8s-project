@@ -75,3 +75,4 @@ helm install prometheus prometheus-community/prometheus \
 --set alertmanager.persistentVolume.storageClass="gp2" \
 --set server.persistentVolume.storageClass="gp2"
 
+FINISH
