@@ -187,7 +187,7 @@ pipeline {
 
               # Replace the image tag placeholder
               // sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
-              sed -i "s|\(image: 529088284113.dkr.ecr.us-east-1.amazonaws.com/jjtech-demo:\)[^ ]*|\1${BUILD_NUMBER}|g" deployment.yml
+              sed -i "s|\\(image: 529088284113.dkr.ecr.us-east-1.amazonaws.com/jjtech-demo:\)[^ ]*|\1${BUILD_NUMBER}|g" deployment.yml
 
 
               git add deployment.yml
