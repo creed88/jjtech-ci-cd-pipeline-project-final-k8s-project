@@ -191,13 +191,15 @@ pipeline {
               git add deployment.yml
               git commit -m "Update image tag to ${BUILD_NUMBER}"
               git push
-          '''
+            '''
+            
           }
 
       }
     }
   }
-}
+  
+  
 
   
     // stage('approve destroy for terraform') {
