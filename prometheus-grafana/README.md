@@ -74,3 +74,4 @@ helm install prometheus prometheus-community/prometheus \
 --set server.service.type=LoadBalancer \
 --set alertmanager.persistentVolume.storageClass="gp2" \
 --set server.persistentVolume.storageClass="gp2"
+
